@@ -6,6 +6,7 @@
     <title>Konkurse Mjedisore</title>
     <link rel="stylesheet" href="styles.css" />
     <style>
+      /* General Styles */
       body {
         font-family: "Segoe UI", sans-serif;
         background-color: #f5fcf8;
@@ -21,10 +22,34 @@
         padding: 20px;
       }
 
+      nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 10px 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      nav ul li {
+        margin: 0;
+      }
+
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      nav ul li a:hover {
+        text-decoration: underline;
+      }
+
       .container {
         display: flex;
         flex-wrap: wrap;
-        padding: 30px;
+        padding: 30px 15px;
         gap: 20px;
         max-width: 1300px;
         margin: auto;
@@ -32,11 +57,11 @@
 
       .school-box {
         flex: 1;
-        min-width: 350px;
+        min-width: 320px;
         background-color: #e3f7ec;
         border: 2px solid #3b9d77;
         border-radius: 10px;
-        padding: 25px;
+        padding: 20px;
       }
 
       .school-box h2 {
@@ -68,7 +93,7 @@
 
       .gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 10px;
         margin-top: 15px;
       }
@@ -83,6 +108,26 @@
         transform: scale(1.05);
       }
 
+      .quiz-button-container {
+        display: flex;
+        justify-content: center;
+        margin: 30px 0;
+      }
+
+      .quiz-button {
+        background-color: #2e8b57;
+        color: white;
+        padding: 12px 20px;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+      }
+
+      .quiz-button:hover {
+        background-color: #226c43;
+      }
+
       footer {
         background-color: #3b9d77;
         color: white;
@@ -91,56 +136,7 @@
         margin-top: 40px;
       }
 
-      @media screen and (max-width: 768px) {
-        .container {
-          flex-direction: column;
-        }
-      }
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-
-      header {
-        background-color: #37966f;
-        padding: 10px;
-        text-align: center;
-      }
-
-      nav ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      nav ul li {
-        display: inline;
-        margin-right: 20px;
-      }
-
-      nav ul li a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-      }
-
-      nav ul li a:hover {
-        text-decoration: underline;
-      }
-
-      section {
-        max-width: 900px;
-        margin: 20px auto;
-        padding: 20px;
-      }
-
-      footer {
-        background-color: #37966f;
-        color: white;
-        text-align: center;
-        padding: 10px;
-      }
+      /* Modal Styles */
       .modal {
         display: none;
         position: fixed;
@@ -160,8 +156,37 @@
         border-radius: 10px;
       }
 
-      .modal:active {
-        display: none;
+      /* Responsive Styles */
+      @media screen and (max-width: 768px) {
+        header h1 {
+          font-size: 1.8rem;
+        }
+
+        nav ul {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .container {
+          flex-direction: column;
+          padding: 20px 10px;
+        }
+
+        .school-box {
+          padding: 15px;
+        }
+
+        .project-title,
+        .school-box p,
+        .activity-list li {
+          font-size: 15px;
+        }
+
+        .quiz-button {
+          width: 90%;
+          text-align: center;
+          font-size: 17px;
+        }
       }
     </style>
   </head>
@@ -255,7 +280,10 @@
         </div>
       </div>
     </div>
-    <a href="quiz/quiz.html"><button>Provo Quizin e Riciklimit</button></a>
+    <div class="quiz-button-container">
+      <a href="quiz/quiz.html" class="quiz-button">Provo Quizin e Riciklimit</a>
+    </div>
+
     <div class="modal" id="imageModal" onclick="closeModal()">
       <img id="modalImage" src="" alt="Foto e zmadhuar" />
     </div>
