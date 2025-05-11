@@ -73,9 +73,14 @@ function showResults() {
 }
 
 function restartQuiz() {
-  location.reload(); // rifresko faqen për të rifilluar
+  location.reload();
 }
 
 buildQuiz();
 submitButton.addEventListener('click', showResults);
 restartButton.addEventListener('click', restartQuiz);
+const exitButton = document.getElementById('exit');
+exitButton.addEventListener('click', () => {
+  window.location.href = 'Konkurse mjedisore.html'; // kjo është faqja ku do të çojë
+});
+
