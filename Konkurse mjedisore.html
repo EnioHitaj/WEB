@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Konkurse Mjedisore</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f5fcf8;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      header {
+        background-color: #3b9d77;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 30px;
+        gap: 20px;
+        max-width: 1300px;
+        margin: auto;
+      }
+
+      .school-box {
+        flex: 1;
+        min-width: 350px;
+        background-color: #e3f7ec;
+        border: 2px solid #3b9d77;
+        border-radius: 10px;
+        padding: 25px;
+      }
+
+      .school-box h2 {
+        color: #2e6e57;
+        text-align: center;
+      }
+
+      .project-title {
+        font-weight: bold;
+        font-size: 17px;
+        margin-top: 10px;
+        color: #267153;
+      }
+
+      .school-box p {
+        font-size: 15px;
+        margin-top: 10px;
+        text-align: justify;
+      }
+
+      .activity-list {
+        margin-top: 10px;
+        padding-left: 20px;
+      }
+
+      .activity-list li {
+        margin-bottom: 6px;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .gallery img {
+        width: 100%;
+        border-radius: 6px;
+        transition: transform 0.3s ease;
+      }
+
+      .gallery img:hover {
+        transform: scale(1.05);
+      }
+
+      footer {
+        background-color: #3b9d77;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        margin-top: 40px;
+      }
+
+      @media screen and (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+      }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #37966f;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      nav ul li {
+        display: inline;
+        margin-right: 20px;
+      }
+
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+      }
+
+      nav ul li a:hover {
+        text-decoration: underline;
+      }
+
+      section {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+
+      footer {
+        background-color: #37966f;
+        color: white;
+        text-align: center;
+        padding: 10px;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+      }
+
+      .modal:active {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li>
+            <a href="rendesia e riciklimit.html"
+              >Riciklimi dhe rëndësia e tij</a
+            >
+          </li>
+          <li><a href="etapat e riciklimit.html">Etapat e Riciklimit</a></li>
+          <li>
+            <a href="bashkepunimi ndershkollor.html"
+              >Bashkëpunimi Ndërshkollor</a
+            >
+          </li>
+          <li><a href="Konkurse mjedisore.html">Konkurse Mjedisore</a></li>
+        </ul>
+      </nav>
+      <h1>Konkurse Mjedisore</h1>
+      <p>Një përballje kreative mes shkollave për mbrojtjen e mjedisit</p>
+    </header>
+
+    <div class="container">
+      <!-- Shkolla 1 -->
+      <div class="school-box">
+        <h2>Gjimnazi "Ali-Demi" - Vlorë</h2>
+        <p class="project-title">Projekti: Një udhëtim nga mbetjet në Art</p>
+        <p>
+          Nxënësit e gjimnazit "Ali-Demi" morën pjesë në një ekspozitë të
+          veçantë ku ata krijuan objekte artistike dhe praktike duke përdorur
+          shishe plastike, letra të përdorura kartonë etj.
+        </p>
+        <ul class="activity-list">
+          <li>Skulptura nga tapë plastike</li>
+          <li>Piktura me material të ricikluar</li>
+          <li>Postera me mesazhe për riciklimin</li>
+        </ul>
+        <div class="gallery">
+          <img
+            src="Produkte (1).jpeg"
+            alt="Projekti 1 - Foto 1"
+            onclick="zoomImage(this)"
+          />
+          <img
+            src="Produkte (2).jpeg"
+            alt="Projekti 1 - Foto 2"
+            onclick="zoomImage(this)"
+          />
+          <img
+            src="produkte 3.jpeg"
+            alt="Projekti 1 - Foto 3"
+            onclick="zoomImage(this)"
+          />
+        </div>
+      </div>
+
+      <!-- Shkolla 2 -->
+      <div class="school-box">
+        <h2>Shkolla "Koto Hoxhi" - Gjirokastër</h2>
+        <p class="project-title">Projekti: Pasurimi i Natyrës</p>
+        <p>
+          Nxënësit e shkollës "Koto Hoxhi" u angazhuan në mbjelljen e pemëve dhe
+          bimëve të ndryshme, duke dhënë një kontribut të çmuar në përmirësimin
+          e cilësisë së ajrit dhe gjelbërimi e qytetit të tyre.
+        </p>
+        <ul class="activity-list">
+          <li>Leksione si të realizojnë mbjellje</li>
+          <li>Kontribut ne pastrimin e ajrit</li>
+          <li>Zbukurim i ambienteve të qytetit</li>
+        </ul>
+        <div class="gallery">
+          <img
+            src="kotohoxhi (1).jpeg"
+            alt="Projekti 2 - Foto 1"
+            onclick="zoomImage(this)"
+          />
+          <img
+            src="kotohoxhi (2).jpeg"
+            alt="Projekti 2 - Foto 2"
+            onclick="zoomImage(this)"
+          />
+          <img
+            src="kotohoxhi.jpeg"
+            alt="Projekti 2 - Foto 3"
+            onclick="zoomImage(this)"
+          />
+        </div>
+      </div>
+    </div>
+    <a href="quiz/quiz.html"><button>Provo Quizin e Riciklimit</button></a>
+    <div class="modal" id="imageModal" onclick="closeModal()">
+      <img id="modalImage" src="" alt="Foto e zmadhuar" />
+    </div>
+    <footer>&copy; 2025 - Konkurse Mjedisore Ndërshkollore</footer>
+    <script>
+      function zoomImage(img) {
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        modalImg.src = img.src;
+        modal.style.display = "flex";
+      }
+
+      function closeModal() {
+        document.getElementById("imageModal").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

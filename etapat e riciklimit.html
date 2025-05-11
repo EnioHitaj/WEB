@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Etapat e Riciklimit</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        background-color: #f0fdf7;
+        color: #333;
+      }
+
+      header {
+        background-color: #37966f;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+
+      section {
+        max-width: 900px;
+        margin: auto;
+        padding: 30px;
+      }
+
+      h2 {
+        color: #2b5947;
+      }
+
+      .step {
+        background-color: #d8f3e2;
+        border-left: 5px solid #37966f;
+        margin-bottom: 20px;
+        padding: 15px;
+        transition: transform 0.3s;
+      }
+
+      .step:hover {
+        transform: scale(1.02);
+        background-color: #c2edd4;
+      }
+
+      .extra-info {
+        display: none;
+        margin-top: 10px;
+        padding-left: 10px;
+        color: #444;
+      }
+
+      .toggle-btn {
+        margin-top: 10px;
+        background-color: #37966f;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 14px;
+        border-radius: 5px;
+      }
+
+      .toggle-btn:hover {
+        background-color: #2b5947;
+      }
+
+      .media-container {
+        border: 2px dashed #aaa;
+        padding: 20px;
+        margin: 30px 0;
+        text-align: center;
+        font-style: italic;
+        color: #555;
+      }
+
+      footer {
+        background-color: #37966f;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        margin-top: 40px;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #37966f;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      nav ul li {
+        display: inline;
+        margin-right: 20px;
+      }
+
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+      }
+
+      nav ul li a:hover {
+        text-decoration: underline;
+      }
+
+      section {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+
+      footer {
+        background-color: #37966f;
+        color: white;
+        text-align: center;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li>
+            <a href="rendesia e riciklimit.html"
+              >Riciklimi dhe rëndësia e tij</a
+            >
+          </li>
+          <li><a href="etapat e riciklimit.html">Etapat e Riciklimit</a></li>
+          <li>
+            <a href="bashkepunimi ndershkollor.html"
+              >Bashkëpunimi Ndërshkollor</a
+            >
+          </li>
+          <li><a href="Konkurse mjedisore.html">Konkurse Mjedisore</a></li>
+        </ul>
+      </nav>
+      <h1>Etapat e Riciklimit</h1>
+    </header>
+
+    <section>
+      <div class="reveal">
+        <h2>Çfarë janë etapat e riciklimit?</h2>
+        <p>
+          Riciklimi përfshin disa hapa që ndihmojnë në përpunimin e mbetjeve për
+          t’u rikthyer si materiale të përdorshme në forma të reja.
+        </p>
+      </div>
+
+      <div class="media-container reveal">
+        <!-- Vendos këtu foto ose video -->
+        <p><img src="Etapat.png" width="500" height="400" /></p>
+      </div>
+
+      <!-- Etapat -->
+      <div class="step reveal">
+        <h3>1. Grumbullimi i mbeturinave</h3>
+        <p>Mbeturinat mblidhen nga kosha të posaçëm ose qendra riciklimi.</p>
+        <button class="toggle-btn" onclick="toggleInfo(this)">
+          Shfaq më shumë
+        </button>
+        <div class="extra-info">
+          <p>
+            Mbetjet mblidhen në mënyrë të organizuar nga shërbimet komunale ose
+            organizata të riciklimit. Ky hap është baza e gjithë procesit,
+            prandaj është e rëndësishme të kemi kosha të ndarë në mënyrë të
+            saktë.
+          </p>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <h3>2. Ndarja sipas materialeve</h3>
+        <p>Mbeturinat ndahen sipas tipit të materialit për përpunim.</p>
+        <button class="toggle-btn" onclick="toggleInfo(this)">
+          Shfaq më shumë
+        </button>
+        <div class="extra-info">
+          <p>
+            Në këtë fazë, materialet ndahen në grupe si plastikë, metal, qelq
+            apo letër. Disa ndarje bëhen automatikisht në uzina, të tjera bëhen
+            manualisht nga punëtorë.
+          </p>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <h3>3. Pastrimi dhe përpunimi</h3>
+        <p>Materialet pastrohen nga ndotjet dhe përgatiten për riciklim.</p>
+        <button class="toggle-btn" onclick="toggleInfo(this)">
+          Shfaq më shumë
+        </button>
+        <div class="extra-info">
+          <p>
+            Lavatoret industriale pastrojnë plastikën, qelqin dhe metalet nga
+            ushqimi apo substanca të dëmshme. Kjo i përgatit ato për fazën e
+            prodhimit.
+          </p>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <h3>4. Shndërrimi në produkte të reja</h3>
+        <p>Materialet e përpunuara bëhen produkte të reja.</p>
+        <button class="toggle-btn" onclick="toggleInfo(this)">
+          Shfaq më shumë
+        </button>
+        <div class="extra-info">
+          <p>
+            Pasi përpunohen, materialet kthehen në flake plastike, rrotulla
+            letre apo pllaka qelqi, që më pas përdoren në fabrikat përkatëse për
+            të prodhuar artikuj të rinj.
+          </p>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <h3>5. Përdorimi i produkteve të ricikluara</h3>
+        <p>
+          Ne blejmë dhe përdorim produkte të ricikluara, duke mbyllur ciklin.
+        </p>
+        <button class="toggle-btn" onclick="toggleInfo(this)">
+          Shfaq më shumë
+        </button>
+        <div class="extra-info">
+          <p>
+            Produktet e ricikluara janë pjesë e përditshmërisë sonë: çanta nga
+            plastika e ricikluar, fletore me letër të ripërdorur, mobilje e
+            veshje ekologjike. Duke i blerë këto, mbështesim riciklimin.
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <h2>Si mund të riciklojmë ne vetë?</h2>
+        <p>
+          Duke ndarë mbeturinat në shtëpi e shkollë, duke ripërdorur sende të
+          vjetra dhe duke zgjedhur produkte të ricikluara, ne kontribuojmë në
+          mjedis më të pastër.
+        </p>
+      </div>
+
+      <div class="media-container reveal">
+        <!-- Vendos këtu foto/video që tregojnë nxënës duke ricikluar -->
+   <div class="video-section">
+  <h2>Video: Si ndodh procesi i riciklimit?♻️</h2>
+  <video id="video" width="600">
+    <source src="Riciklimi.mp4" type="video/mp4" />
+    Pajisja juaj nuk e përkrah këtë video.
+  </video>
+
+  <div class="controls">
+    <button onclick="luajVideo()">Luaj</button>
+    <button onclick="ndaloVideo()">Ndal</button>
+    <button onclick="restartoVideo()">Rifillo</button>
+    <input type="range" id="seekBar" value="0" step="1" />
+    <label for="volumeBar">Volumi:</label>
+    <input type="range" id="volumeBar" min="0" max="1" step="0.01" />
+  </div>
+</div>
+
+    </section>
+
+    <script>
+      // Toggle për çdo etapë
+      function toggleInfo(id) {
+        const elem = document.getElementById(id);
+        elem.style.display = elem.style.display === "block" ? "none" : "block";
+      }
+
+      // Kontroll për videon
+const video = document.getElementById("video");
+const seekBar = document.getElementById("seekBar");
+const volumeBar = document.getElementById("volumeBar");
+
+// Play
+function luajVideo() {
+  video.play();
+}
+
+// Pause
+function ndaloVideo() {
+  video.pause();
+}
+
+// Restart
+function restartoVideo() {
+  video.currentTime = 0;
+  video.play();
+}
+
+// Volume control
+volumeBar.addEventListener("input", function () {
+  video.volume = volumeBar.value;
+});
+
+// Update seek bar as video plays
+video.addEventListener("timeupdate", function () {
+  seekBar.max = video.duration;
+  seekBar.value = video.currentTime;
+});
+
+// Seek manually
+seekBar.addEventListener("input", function () {
+  video.currentTime = seekBar.value;
+});
+   
+    </script>
+
+    <footer>&copy; 2025 - Projekti i Riciklimit nga Shkolla "Ali Demi"</footer>
+
+    <!-- JavaScript për scroll reveal dhe toggle -->
+    <script>
+      // Efekt shfaqje me scroll
+      function revealOnScroll() {
+        const reveals = document.querySelectorAll(".reveal");
+        for (let i = 0; i < reveals.length; i++) {
+          const windowHeight = window.innerHeight;
+          const elementTop = reveals[i].getBoundingClientRect().top;
+          const revealPoint = 150;
+
+          if (elementTop < windowHeight - revealPoint) {
+            reveals[i].classList.add("active");
+          } else {
+            reveals[i].classList.remove("active");
+          }
+        }
+      }
+
+      window.addEventListener("scroll", revealOnScroll);
+      window.addEventListener("load", revealOnScroll);
+
+      // Toggle për informacion shtesë
+      function toggleInfo(button) {
+        const extraInfo = button.nextElementSibling;
+        const isVisible = extraInfo.style.display === "block";
+        extraInfo.style.display = isVisible ? "none" : "block";
+        button.textContent = isVisible
+          ? "Shfaq më shumë"
+          : "Fshihe informacionin";
+      }
+    </script>
+  </body>
+</html>

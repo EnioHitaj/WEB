@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="sq">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bashkëpunimi Ndërshkollor</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        background-color: #ffffff;
+        color: #02470b;
+      }
+
+      header {
+        background-color: #37966f;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      nav ul li {
+        display: inline;
+        margin-right: 20px;
+      }
+
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+      }
+
+      nav ul li a:hover {
+        text-decoration: underline;
+      }
+
+      section {
+        max-width: 1100px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+
+      h2 {
+        color: #2e604f;
+      }
+
+      .album {
+        margin-bottom: 40px;
+        border: 1px solid #cce3d3;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #e8f7ef;
+      }
+
+      .album h3 {
+        margin-top: 0;
+      }
+
+      .photos {
+        display: none;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .photos img {
+        width: 200px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+        border: 2px solid #b5d3c6;
+        cursor: pointer;
+      }
+
+      .photos img:hover {
+        transform: scale(1.05);
+      }
+
+      .toggle-btn {
+        background-color: #2e8b57;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .toggle-btn:hover {
+        background-color: #245f43;
+      }
+
+      footer {
+        background-color: #37966f;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        margin-top: 40px;
+      }
+
+      /* Modal për zmadhimin e fotos */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+      }
+
+      .modal:active {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li>
+            <a href="rendesia e riciklimit.html"
+              >Riciklimi dhe rëndësia e tij</a
+            >
+          </li>
+          <li><a href="etapat e riciklimit.html">Etapat e Riciklimit</a></li>
+          <li>
+            <a href="bashkepunimi ndershkollor.html"
+              >Bashkëpunimi Ndërshkollor</a
+            >
+          </li>
+          <li><a href="Konkurse mjedisore.html">Konkurse Mjedisore</a></li>
+        </ul>
+      </nav>
+      <h1>Bashkëpunimi Ndërshkollor</h1>
+    </header>
+
+    <section>
+      <h2>Aktivitetet e riciklimit</h2>
+      <p>
+        Nxënës nga shkolla të ndryshme në Shqipëri, nën udhëheqjen e mësuesve të
+        tyre, janë angazhuar në aktivitete mjedisore të vlefshme, duke mbledhur
+        një sasi të konsiderueshme mbetjesh të riciklueshme dhe duke kontribuar
+        në gjelbërimin e mjedisit përmes mbjelljes së disa llojeve të ndryshme
+        bimësh.
+      </p>
+
+      <!-- Albumi 1 -->
+      <div class="album">
+        <h3>Gjimnazi "Ali-Demi" - Vlorë</h3>
+        <button class="toggle-btn" onclick="toggleAlbum(this)">
+          Shfaq fotot
+        </button>
+        <div class="photos">
+          <img src="alidemi (1).jpeg" alt="Foto 1" onclick="zoomImage(this)" />
+          <img src="alidemi (2).jpeg" alt="Foto 2" onclick="zoomImage(this)" />
+          <img src="alidemi (3).jpeg" alt="Foto 3" onclick="zoomImage(this)" />
+          <img src="alidemi (4).jpeg" alt="Foto 3" onclick="zoomImage(this)" />
+          <img src="alidemi (5).jpeg" alt="Foto 3" onclick="zoomImage(this)" />
+          <img src="alidemi (6).jpeg" alt="Foto 3" onclick="zoomImage(this)" />
+          <!-- ... -->
+        </div>
+      </div>
+
+      <!-- Albumi 2 -->
+      <div class="album">
+        <h3>Shkolla "Urani Rumbo" - Gjirokastër</h3>
+        <button class="toggle-btn" onclick="toggleAlbum(this)">
+          Shfaq fotot
+        </button>
+        <div class="photos">
+          <img
+            src="uranirumbo (1).jpeg"
+            alt="Foto 1"
+            onclick="zoomImage(this)"
+          />
+          <img
+            src="uranirumbo (2).jpeg"
+            alt="Foto 2"
+            onclick="zoomImage(this)"
+          />
+          <img
+            src="uranirumbo (3).jpeg"
+            alt="Foto 3"
+            onclick="zoomImage(this)"
+          />
+          <img
+            src="uranirumbo (4).jpeg"
+            alt="Foto 4"
+            onclick="zoomImage(this)"
+          />
+          <img
+            src="uranirumbo (5).jpeg"
+            alt="Foto 5"
+            onclick="zoomImage(this)"
+          />
+          <img
+            src="uranirumbo (6).jpeg"
+            alt="Foto 6"
+            onclick="zoomImage(this)"
+          />
+          <!-- ... -->
+        </div>
+      </div>
+
+      <!-- Albumi 3 -->
+      <div class="album">
+        <h3>Shkolla "Rait Bajo" - Shales Konispol, Sarandë</h3>
+        <button class="toggle-btn" onclick="toggleAlbum(this)">
+          Shfaq fotot
+        </button>
+        <div class="photos">
+          <img src="raitbajo (1).jpeg" alt="Foto 1" onclick="zoomImage(this)" />
+          <img src="raitbajo (2).jpeg" alt="Foto 2" onclick="zoomImage(this)" />
+          <img src="raitbajo (3).jpeg" alt="Foto 2" onclick="zoomImage(this)" />
+          <img src="raitbajo (4).jpeg" alt="Foto 2" onclick="zoomImage(this)" />
+          <img src="raitbajo (5).jpeg" alt="Foto 2" onclick="zoomImage(this)" />
+          <img src="raitbajo (6).jpeg" alt="Foto 2" onclick="zoomImage(this)" />
+          <!-- ... -->
+        </div>
+      </div>
+    </section>
+
+    <!-- MODALI për zmadhim -->
+    <div class="modal" id="imageModal" onclick="closeModal()">
+      <img id="modalImage" src="" alt="Foto e zmadhuar" />
+    </div>
+
+    <footer>&copy; 2025 - Bashkëpunimi Ndërshkollor për Mjedisin</footer>
+
+    <script>
+      function toggleAlbum(button) {
+        const photoDiv = button.nextElementSibling;
+        const isVisible = photoDiv.style.display === "flex";
+        photoDiv.style.display = isVisible ? "none" : "flex";
+        button.textContent = isVisible ? "Shfaq fotot" : "Fshihe fotot";
+      }
+
+      function zoomImage(img) {
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        modalImg.src = img.src;
+        modal.style.display = "flex";
+      }
+
+      function closeModal() {
+        document.getElementById("imageModal").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
