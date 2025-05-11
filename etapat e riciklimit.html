@@ -6,137 +6,153 @@
     <title>Etapat e Riciklimit</title>
     <link rel="stylesheet" href="styles.css" />
     <style>
-      body {
-        font-family: "Segoe UI", sans-serif;
-        margin: 0;
-        background-color: #f0fdf7;
-        color: #333;
-      }
+    body {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  background-color: #f0fdf7;
+  color: #333;
+}
 
-      header {
-        background-color: #37966f;
-        color: white;
-        padding: 20px;
-        text-align: center;
-      }
+header {
+  background-color: #37966f;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
 
-      section {
-        max-width: 900px;
-        margin: auto;
-        padding: 30px;
-      }
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-      h2 {
-        color: #2b5947;
-      }
+nav ul li {
+  margin: 10px;
+}
 
-      .step {
-        background-color: #d8f3e2;
-        border-left: 5px solid #37966f;
-        margin-bottom: 20px;
-        padding: 15px;
-        transition: transform 0.3s;
-      }
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
 
-      .step:hover {
-        transform: scale(1.02);
-        background-color: #c2edd4;
-      }
+nav ul li a:hover {
+  text-decoration: underline;
+}
 
-      .extra-info {
-        display: none;
-        margin-top: 10px;
-        padding-left: 10px;
-        color: #444;
-      }
+section {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+}
 
-      .toggle-btn {
-        margin-top: 10px;
-        background-color: #37966f;
-        color: white;
-        border: none;
-        padding: 8px 12px;
-        cursor: pointer;
-        font-size: 14px;
-        border-radius: 5px;
-      }
+h2 {
+  color: #2b5947;
+}
 
-      .toggle-btn:hover {
-        background-color: #2b5947;
-      }
+.step {
+  background-color: #d8f3e2;
+  border-left: 5px solid #37966f;
+  margin-bottom: 20px;
+  padding: 15px;
+  transition: transform 0.3s;
+}
 
-      .media-container {
-        border: 2px dashed #aaa;
-        padding: 20px;
-        margin: 30px 0;
-        text-align: center;
-        font-style: italic;
-        color: #555;
-      }
+.step:hover {
+  transform: scale(1.02);
+  background-color: #c2edd4;
+}
 
-      footer {
-        background-color: #37966f;
-        color: white;
-        text-align: center;
-        padding: 15px;
-        margin-top: 40px;
-      }
+.extra-info {
+  display: none;
+  margin-top: 10px;
+  padding-left: 10px;
+  color: #444;
+}
 
-      .reveal {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s ease, transform 0.8s ease;
-      }
+.toggle-btn {
+  margin-top: 10px;
+  background-color: #37966f;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+}
 
-      .reveal.active {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
+.toggle-btn:hover {
+  background-color: #2b5947;
+}
 
-      header {
-        background-color: #37966f;
-        padding: 10px;
-        text-align: center;
-      }
+.media-container {
+  border: 2px dashed #aaa;
+  padding: 20px;
+  margin: 30px 0;
+  text-align: center;
+  font-style: italic;
+  color: #555;
+}
 
-      nav ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-      }
+.media-container img,
+.media-container video {
+  max-width: 100%;
+  height: auto;
+}
 
-      nav ul li {
-        display: inline;
-        margin-right: 20px;
-      }
+.video-section {
+  text-align: center;
+}
 
-      nav ul li a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-      }
+.controls {
+  margin-top: 10px;
+}
 
-      nav ul li a:hover {
-        text-decoration: underline;
-      }
+footer {
+  background-color: #37966f;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
 
-      section {
-        max-width: 900px;
-        margin: 20px auto;
-        padding: 20px;
-      }
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
 
-      footer {
-        background-color: #37966f;
-        color: white;
-        text-align: center;
-        padding: 10px;
-      }
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 600px) {
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    margin: 5px 0;
+  }
+
+  .toggle-btn {
+    width: 100%;
+  }
+
+  section {
+    padding: 15px;
+  }
+
+  .media-container {
+    padding: 15px;
+  }
+}
     </style>
   </head>
   <body>
