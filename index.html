@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sq">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,21 +7,129 @@
     <title>Riciklimi</title>
   </head>
   <body>
-    <h1>Riciklimi 🌍♻️</h1>
+    <style>
+      /* Base Reset and Typography */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to bottom right, #e0f7ec, #f0fff4);
+        color: #333;
+        animation: fadeIn 1.5s ease-in;
+      }
 
-    <h3>
-      Në këtë faqe webi të ndërtuar nga nxënësit e gjimnazit Ali Demi, ne do të
-      mësojmë se çfarë është riciklimi, si mund të riciklojmë dhe gjithashtu
-      aktivitetet ku disa shkolla janë përfshirë.
-    </h3>
+      /* Fade In Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
 
-    <ul>
-      <li><a href="rendesia e riciklimit.html">Rëndësia e Riciklimit</a></li>
-      <li><a href="etapat e riciklimit.html">Etapat e Riciklimit</a></li>
-      <li>
-        <a href="bashkepunimi ndershkollor.html">Bashkëpunimi Ndërshkollor</a>
-      </li>
-      <li><a href="Konkurse mjedisore.html">Konkurse Mjedisore</a></li>
-    </ul>
+      /* Layout Container */
+      .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 2rem 1rem;
+        text-align: center;
+      }
+
+      /* Main Heading */
+      h1 {
+        color: #2e8b57;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        animation: slideDown 1s ease-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-30px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* Paragraph Text */
+      .intro {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+        padding: 0 1rem;
+      }
+
+      /* Navigation Styling */
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      nav ul li {
+        margin: 1rem 0;
+      }
+
+      nav ul li a {
+        display: block;
+        background-color: #2e8b57;
+        color: white;
+        text-decoration: none;
+        padding: 1rem;
+        border-radius: 12px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        font-size: 1.1rem;
+      }
+
+      nav ul li a:hover {
+        background-color: #246b45;
+        transform: scale(1.03);
+      }
+
+      /* Responsive Typography */
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .intro {
+          font-size: 1rem;
+        }
+
+        nav ul li a {
+          font-size: 1rem;
+          padding: 0.8rem;
+        }
+      }
+    </style>
+    <div class="container">
+      <h1>Riciklimi 🌍♻️</h1>
+
+      <p class="intro">
+        Në këtë faqe webi të ndërtuar nga nxënësit e gjimnazit Ali Demi, ne do
+        të mësojmë se çfarë është riciklimi, si mund të riciklojmë dhe
+        gjithashtu do të shohim disa nga aktivitetet ku disa shkolla janë
+        përfshirë.
+      </p>
+
+      <nav>
+        <ul>
+          <li>
+            <a href="rendesia e riciklimit.html">Rëndësia e Riciklimit</a>
+          </li>
+          <li><a href="etapat e riciklimit.html">Etapat e Riciklimit</a></li>
+          <li>
+            <a href="bashkepunimi ndershkollor.html"
+              >Bashkëpunimi Ndërshkollor</a
+            >
+          </li>
+          <li><a href="Konkurse mjedisore.html">Konkurse Mjedisore</a></li>
+        </ul>
+      </nav>
+    </div>
   </body>
 </html>
