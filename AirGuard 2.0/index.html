@@ -1,0 +1,1459 @@
+<!doctype html>
+<html lang="sq">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AirGuard 2.0 — Projekt Arduino</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #060c10;
+        --bg2: #0b1520;
+        --bg3: #0f1f2e;
+        --card: #101e2c;
+        --green: #00e5a0;
+        --green2: #00c47a;
+        --cyan: #00c8e8;
+        --red: #ff3d5a;
+        --yellow: #ffe066;
+        --text: #d4eaf7;
+        --muted: #6b8fa8;
+        --border: rgba(0, 229, 160, 0.18);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Syne", sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* ─── SCROLLBAR ─── */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--green);
+        border-radius: 3px;
+      }
+
+      /* ─── NOISE OVERLAY ─── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        opacity: 0.4;
+      }
+
+      /* ─── NAV ─── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.1rem 3rem;
+        background: rgba(6, 12, 16, 0.85);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: "Orbitron", monospace;
+        font-weight: 900;
+        font-size: 1.15rem;
+        color: var(--green);
+        letter-spacing: 0.12em;
+      }
+      .nav-logo span {
+        color: var(--cyan);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+      .nav-links a {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--muted);
+        text-decoration: none;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: color 0.25s;
+      }
+      .nav-links a:hover {
+        color: var(--green);
+      }
+
+      /* ─── HERO ─── */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 7rem 2rem 4rem;
+        overflow: hidden;
+        text-align: center;
+      }
+      .hero-grid {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background-image:
+          linear-gradient(rgba(0, 229, 160, 0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 229, 160, 0.07) 1px, transparent 1px);
+        background-size: 60px 60px;
+        mask-image: radial-gradient(
+          ellipse 80% 60% at 50% 50%,
+          black 40%,
+          transparent 100%
+        );
+      }
+      .hero-glow {
+        position: absolute;
+        width: 700px;
+        height: 700px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 229, 160, 0.12) 0%,
+          transparent 70%
+        );
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+      .hero-badge {
+        position: relative;
+        z-index: 1;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        font-weight: 500;
+        color: var(--green);
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        border: 1px solid var(--border);
+        padding: 0.4rem 1.1rem;
+        border-radius: 99px;
+        background: rgba(0, 229, 160, 0.06);
+        margin-bottom: 1.5rem;
+        animation: fadeUp 0.8s ease both;
+      }
+      .hero h1 {
+        position: relative;
+        z-index: 1;
+        font-family: "Orbitron", monospace;
+        font-size: clamp(2.8rem, 8vw, 6rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.01em;
+        color: #fff;
+        animation: fadeUp 0.9s 0.1s ease both;
+      }
+      .hero h1 .accent {
+        color: var(--green);
+      }
+      .hero h1 .accent2 {
+        color: var(--cyan);
+      }
+      .hero-sub {
+        position: relative;
+        z-index: 1;
+        font-size: 1.05rem;
+        color: var(--muted);
+        max-width: 580px;
+        margin: 1.4rem auto 2.4rem;
+        line-height: 1.7;
+        animation: fadeUp 1s 0.2s ease both;
+      }
+      .hero-stats {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: fadeUp 1s 0.35s ease both;
+      }
+      .hero-stat {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1rem 1.6rem;
+        text-align: center;
+      }
+      .hero-stat .val {
+        font-family: "Orbitron", monospace;
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--green);
+      }
+      .hero-stat .lbl {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 0.2rem;
+      }
+      .scroll-hint {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        animation: fadeIn 1.5s 1s ease both;
+      }
+      .scroll-line {
+        width: 1px;
+        height: 40px;
+        background: linear-gradient(var(--green), transparent);
+        animation: scrollPulse 2s infinite;
+      }
+
+      /* ─── SECTIONS ─── */
+      section {
+        position: relative;
+        z-index: 1;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+      .section-pad {
+        padding: 6rem 0;
+      }
+
+      .section-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        font-weight: 500;
+        color: var(--green);
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        margin-bottom: 0.8rem;
+      }
+      .section-title {
+        font-family: "Orbitron", monospace;
+        font-size: clamp(1.6rem, 4vw, 2.5rem);
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.15;
+        margin-bottom: 1rem;
+      }
+      .section-desc {
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.75;
+        max-width: 620px;
+      }
+
+      /* ─── DIVIDER ─── */
+      .divider {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--border),
+          transparent
+        );
+        margin: 0;
+      }
+
+      /* ─── HOW IT WORKS ─── */
+      .flow {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin-top: 3.5rem;
+        position: relative;
+      }
+      .flow::before {
+        content: "";
+        position: absolute;
+        left: 28px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(var(--green), var(--cyan), var(--green));
+        opacity: 0.3;
+      }
+      .flow-step {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;
+        padding: 0 0 2.5rem 0;
+        animation: fadeUp 0.6s ease both;
+      }
+      .flow-num {
+        flex-shrink: 0;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--card);
+        border: 2px solid var(--green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Orbitron", monospace;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--green);
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 0 20px rgba(0, 229, 160, 0.15);
+      }
+      .flow-content h3 {
+        font-family: "Orbitron", monospace;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.4rem;
+        letter-spacing: 0.03em;
+      }
+      .flow-content p {
+        color: var(--muted);
+        font-size: 0.93rem;
+        line-height: 1.7;
+      }
+
+      /* ─── COMPONENTS ─── */
+      .comp-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        gap: 1.2rem;
+        margin-top: 3rem;
+      }
+      .comp-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.5rem 1.4rem;
+        transition:
+          transform 0.25s,
+          border-color 0.25s,
+          box-shadow 0.25s;
+        position: relative;
+        overflow: hidden;
+      }
+      .comp-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 229, 160, 0.06),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .comp-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--green);
+        box-shadow: 0 8px 30px rgba(0, 229, 160, 0.1);
+      }
+      .comp-card:hover::before {
+        opacity: 1;
+      }
+      .comp-icon {
+        font-size: 1.6rem;
+        margin-bottom: 0.8rem;
+        display: block;
+      }
+      .comp-name {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--green);
+        letter-spacing: 0.05em;
+        margin-bottom: 0.4rem;
+      }
+      .comp-desc {
+        font-size: 0.83rem;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      /* ─── PHOTOS ─── */
+      .photo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.4rem;
+        margin-top: 3rem;
+      }
+      .photo-slot {
+        position: relative;
+        aspect-ratio: 4/3;
+        border-radius: 16px;
+        background: var(--card);
+        border: 2px dashed rgba(0, 229, 160, 0.25);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        transition: border-color 0.25s;
+        cursor: pointer;
+      }
+      .photo-slot:hover {
+        border-color: var(--green);
+      }
+      .photo-slot img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 14px;
+        display: none;
+      }
+      .photo-slot.has-img img {
+        display: block;
+      }
+      .photo-slot.has-img .photo-placeholder {
+        display: none;
+      }
+      .photo-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+        pointer-events: none;
+      }
+      .photo-placeholder svg {
+        opacity: 0.35;
+      }
+      .photo-placeholder span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .photo-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(6, 12, 16, 0.92));
+        padding: 1.5rem 1rem 0.8rem;
+        font-size: 0.8rem;
+        color: var(--text);
+        font-family: "JetBrains Mono", monospace;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .photo-slot.has-img:hover .photo-caption {
+        opacity: 1;
+      }
+
+      /* Photo upload input hidden */
+      .photo-slot input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 2;
+      }
+
+      /* ─── SPECS TABLE ─── */
+      .specs-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2.5rem;
+        font-size: 0.9rem;
+      }
+      .specs-table th {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-align: left;
+        padding: 0.8rem 1.2rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .specs-table td {
+        padding: 1rem 1.2rem;
+        border-bottom: 1px solid rgba(0, 229, 160, 0.07);
+        vertical-align: top;
+      }
+      .specs-table tr:hover td {
+        background: rgba(0, 229, 160, 0.03);
+      }
+      .specs-table .key {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.8rem;
+        color: var(--green);
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .specs-table .val {
+        color: var(--text);
+      }
+      .specs-table .note {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      /* ─── STATUS WIDGET ─── */
+      .status-row {
+        display: flex;
+        gap: 1.2rem;
+        flex-wrap: wrap;
+        margin-top: 2.5rem;
+      }
+      .status-card {
+        flex: 1;
+        min-width: 160px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.4rem 1.6rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .status-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+      }
+      .status-card.green::after {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--green),
+          transparent
+        );
+      }
+      .status-card.cyan::after {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--cyan),
+          transparent
+        );
+      }
+      .status-card.red::after {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--red),
+          transparent
+        );
+      }
+      .status-card.yellow::after {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--yellow),
+          transparent
+        );
+      }
+      .status-lbl {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.5rem;
+      }
+      .status-val {
+        font-family: "Orbitron", monospace;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+      .status-card.green .status-val {
+        color: var(--green);
+      }
+      .status-card.cyan .status-val {
+        color: var(--cyan);
+      }
+      .status-card.red .status-val {
+        color: var(--red);
+      }
+      .status-card.yellow .status-val {
+        color: var(--yellow);
+      }
+      .status-unit {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--muted);
+        margin-top: 0.2rem;
+      }
+      .dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 0.4rem;
+        animation: pulse 2s infinite;
+      }
+      .dot.green {
+        background: var(--green);
+        box-shadow: 0 0 8px var(--green);
+      }
+      .dot.red {
+        background: var(--red);
+        box-shadow: 0 0 8px var(--red);
+      }
+
+      /* ─── TEAM ─── */
+      .team-note {
+        margin-top: 2.5rem;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2rem;
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+      }
+      .team-icon {
+        font-size: 2rem;
+        flex-shrink: 0;
+        width: 52px;
+        height: 52px;
+        background: rgba(0, 229, 160, 0.08);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .team-text h3 {
+        font-family: "Orbitron", monospace;
+        font-size: 0.95rem;
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+      .team-text p {
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.7;
+      }
+
+      /* ─── FOOTER ─── */
+      footer {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid var(--border);
+        padding: 2.5rem 0;
+        text-align: center;
+      }
+      footer p {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+      }
+      footer span {
+        color: var(--green);
+      }
+
+      /* ─── ANIMATIONS ─── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(0.85);
+        }
+      }
+      @keyframes scrollPulse {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* ─── RESPONSIVE ─── */
+      @media (max-width: 700px) {
+        nav {
+          padding: 1rem 1.2rem;
+        }
+        .nav-links {
+          gap: 1rem;
+        }
+        .hero-stats {
+          gap: 1rem;
+        }
+        .flow::before {
+          display: none;
+        }
+        .team-note {
+          flex-direction: column;
+        }
+      }
+      .theme-toggle {
+        cursor: pointer;
+        font-size: 1.2rem;
+        margin-left: 1rem;
+        transition: 0.3s;
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.15);
+      }
+
+      /* LIGHT MODE VARIABLES */
+      body.light {
+        --bg: #f4f9fc;
+        --bg2: #ffffff;
+        --bg3: #eef3f7;
+        --card: #ffffff;
+        --green: #00a86b;
+        --green2: #009e60;
+        --cyan: #008db3;
+        --red: #d7263d;
+        --yellow: #ffb703;
+        --text: #0f172a;
+        --muted: #64748b;
+        --border: rgba(0, 168, 107, 0.18);
+      }
+
+      /* Smooth transition */
+      body {
+        transition:
+          background 0.4s ease,
+          color 0.4s ease;
+      }
+
+      nav,
+      .comp-card,
+      .status-card,
+      .team-note,
+      .hero-stat,
+      .photo-slot {
+        transition:
+          background 0.4s ease,
+          border-color 0.4s ease;
+      }
+      /* ================= MOBILE FIX PRO ================= */
+      @media (max-width: 768px) {
+        /* NAV */
+        nav {
+          padding: 0.9rem 1.2rem;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        /* HERO */
+        .hero {
+          padding: 6rem 1.2rem 3rem;
+        }
+
+        .hero h1 {
+          font-size: clamp(2.2rem, 10vw, 3.2rem);
+        }
+
+        .hero-sub {
+          font-size: 0.95rem;
+        }
+
+        .hero-stats {
+          gap: 0.8rem;
+        }
+
+        .hero-stat {
+          padding: 0.8rem 1rem;
+        }
+
+        /* FLOW */
+        .flow-step {
+          gap: 1rem;
+        }
+
+        .flow-num {
+          width: 42px;
+          height: 42px;
+          font-size: 0.8rem;
+        }
+
+        .flow-content h3 {
+          font-size: 0.9rem;
+        }
+
+        .flow-content p {
+          font-size: 0.85rem;
+        }
+
+        /* COMPONENTS */
+        .comp-grid {
+          grid-template-columns: 1fr;
+        }
+
+        /* STATUS */
+        .status-row {
+          flex-direction: column;
+        }
+
+        .status-card {
+          width: 100%;
+        }
+
+        /* SPECS TABLE FIX */
+        .specs-table {
+          display: block;
+          overflow-x: auto;
+          white-space: nowrap;
+        }
+
+        /* PHOTOS */
+        .photo-grid {
+          grid-template-columns: 1fr;
+        }
+
+        /* TEAM */
+        .team-note {
+          flex-direction: column;
+          padding: 1.5rem;
+        }
+
+        /* SECTION PADDING */
+        .section-pad {
+          padding: 4rem 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <div class="nav-logo">Air<span>Guard</span> 2.0</div>
+      <div class="nav-links">
+        <a href="#funksioni">Si Funksionon</a>
+        <a href="#komponentet">Komponentet</a>
+        <a href="#foto">Fotot</a>
+        <a href="#ekipi">Ekipi</a>
+      </div>
+      <div class="theme-toggle" onclick="toggleTheme()">🌙</div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-glow"></div>
+
+      <div class="hero-badge">🎓 Projekt Shkollor · Arduino UNO</div>
+
+      <h1>
+        <span class="accent">Air</span><span class="accent2">Guard</span
+        ><br />2.0
+      </h1>
+      <p class="hero-sub">
+        Sistem inteligjent për matjen dhe pastrimin e ajrit në kohë reale, i
+        ndërtuar me Arduino UNO, sensorë CO₂, temperature dhe lagështire.
+      </p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="val">MQ135</div>
+          <div class="lbl">Sensor CO₂</div>
+        </div>
+        <div class="hero-stat">
+          <div class="val">DHT22</div>
+          <div class="lbl">Temp · Lagësh.</div>
+        </div>
+        <div class="hero-stat">
+          <div class="val">Arduino</div>
+          <div class="lbl">Mikrokontroller</div>
+        </div>
+        <div class="hero-stat">
+          <div class="val">16×2</div>
+          <div class="lbl">LCD Display</div>
+        </div>
+      </div>
+
+      <div class="scroll-hint">
+        <div class="scroll-line"></div>
+        Zbulo më shumë
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- HOW IT WORKS -->
+    <section class="section-pad" id="funksioni">
+      <div class="container">
+        <div class="section-tag">// Si Funksionon</div>
+        <h2 class="section-title">Procesi Hap-pas-Hapi</h2>
+        <p class="section-desc">
+          AirGuard 2.0 monitoron vazhdimisht cilësinë e ajrit. Kur niveli i CO₂
+          kalon vlerën optimale, sistemi aktivizohet automatikisht për ta
+          pastruar ajrin.
+        </p>
+
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-num">01</div>
+            <div class="flow-content">
+              <h3>Matja e CO₂</h3>
+              <p>
+                Sensori <strong style="color: var(--green)">MQ135</strong> mat
+                vazhdimisht përqendrimin e CO₂ dhe gazrave të tjerë në ajër. Të
+                dhënat lexohen nga Arduino UNO dhe shfaqen në kohë reale në
+                ekranin LCD 16×2.
+              </p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-num">02</div>
+            <div class="flow-content">
+              <h3>Matja e Temperaturës & Lagështirës</h3>
+              <p>
+                Sensori <strong style="color: var(--cyan)">DHT22</strong> mat
+                temperaturën dhe lagështirën relative të mjedisit. Këto të dhëna
+                plotësojnë treguesit e cilësisë së ajrit.
+              </p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-num">03</div>
+            <div class="flow-content">
+              <h3>Vlera Optimale</h3>
+              <p>
+                Arduino krahason vlerën e matur të CO₂ me vlerën optimale të
+                vendosur me anë të programimit. Nëse vlera e tejkalon kufirin,
+                sistemi ndez
+                <strong style="color: var(--red)">LED-in e kuq</strong> si
+                sinjalizues.
+              </p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-num">04</div>
+            <div class="flow-content">
+              <h3>Aktivizimi i Turbinës</h3>
+              <p>
+                Moduli
+                <strong style="color: var(--yellow)">Relay</strong> aktivizon
+                turbinën e furnizuar me rrymë nga bateria 12V. Turbina thith
+                ajrin dhe e kalon atë nëpër shtresat e filtrit.
+              </p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-num">05</div>
+            <div class="flow-content">
+              <h3>Filtrimi & Pastrimi</h3>
+              <p>
+                Ajri i ndotur kalon nëpër
+                <strong style="color: var(--green)">filtrat me gëlqere</strong>
+                brenda tubit, ku CO₂ filtrohet dhe del nga ana tjetër.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- STATUS DEMO -->
+    <section class="section-pad">
+      <div class="container">
+        <div class="section-tag">// Treguesit e Sistemit</div>
+        <h2 class="section-title">Vlerat e Monitorimit</h2>
+        <p class="section-desc">
+          Shembull i vlerave të shfaqura në LCD dhe të lexuara nga sensorët
+          gjatë funksionimit të sistemit.
+        </p>
+        <div class="status-row">
+          <div class="status-card green">
+            <div class="status-lbl">
+              <span class="dot green"></span>CO₂ Level
+            </div>
+            <div class="status-val">412</div>
+            <div class="status-unit">ppm — Brenda normës</div>
+          </div>
+          <div class="status-card cyan">
+            <div class="status-lbl">
+              <span class="dot green"></span>Temperatura
+            </div>
+            <div class="status-val">23.4</div>
+            <div class="status-unit">°C</div>
+          </div>
+          <div class="status-card cyan">
+            <div class="status-lbl">
+              <span class="dot green"></span>Lagështira
+            </div>
+            <div class="status-val">58</div>
+            <div class="status-unit">% RH</div>
+          </div>
+          <div class="status-card red">
+            <div class="status-lbl"><span class="dot red"></span>Turbina</div>
+            <div class="status-val">OFF</div>
+            <div class="status-unit">Brenda vlerës optimale — joaktive</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- COMPONENTS -->
+    <section class="section-pad" id="komponentet">
+      <div class="container">
+        <div class="section-tag">// Hardware</div>
+        <h2 class="section-title">Elementët e Përdorur</h2>
+        <p class="section-desc">
+          Të gjitha komponentet janë zgjedhur për kosto të ulët dhe
+          disponueshmëri, duke ruajtur funksionalitet të plotë.
+        </p>
+
+        <div class="comp-grid">
+          <div class="comp-card">
+            <span class="comp-icon">🤖</span>
+            <div class="comp-name">Arduino UNO</div>
+            <div class="comp-desc">
+              Mikrokontrolleri kryesor. Lexon sensorët, kontrollon relay-n dhe
+              dërgon të dhëna tek LCD.
+            </div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-icon">🧪</span>
+            <div class="comp-name">MQ135 Gas Sensor</div>
+            <div class="comp-desc">
+              Sensor analog për matjen e CO₂, NH₃, NOx, alkoolit dhe benzenit.
+              Dalje 0–5V.
+            </div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-icon">🌡️</span>
+            <div class="comp-name">DHT22</div>
+            <div class="comp-desc">
+              Sensor dixhital për temperaturë (−40°C deri +80°C) dhe lagështirë
+              relative (0–100%).
+            </div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-icon">🖥️</span>
+            <div class="comp-name">LCD 16×2</div>
+            <div class="comp-desc">
+              Ekran me 2 rreshta × 16 kolona. Shfaq vlerën e CO₂, temperaturës
+              dhe statusin e sistemit.
+            </div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-icon">⚡</span>
+            <div class="comp-name">Relay Module</div>
+            <div class="comp-desc">
+              Ndërprerës elektronik. Mundëson Arduino-n (5V) të kontrollojë
+              turbinën me 12V pa rrezik.
+            </div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-icon">🌀</span>
+            <div class="comp-name">Turbinë / Fan</div>
+            <div class="comp-desc">
+              Tërheq ajrin nëpër sistemin e filtrave. Furnizuar me bateri 12V
+              DC, kontrollohet nga relay.
+            </div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-icon">🔋</span>
+            <div class="comp-name">Bateri 12V</div>
+            <div class="comp-desc">
+              Furnizon turbinën me energji të mjaftueshme për funksionim të
+              vazhdueshëm.
+            </div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-icon">🔴</span>
+            <div class="comp-name">LED i Kuq</div>
+            <div class="comp-desc">
+              Sinjal vizual alarmi. Ndizet automatikisht kur CO₂ tejkalon vlerën
+              optimale të vendosur.
+            </div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-icon">🔩</span>
+            <div class="comp-name">Breadboard + Jumper Wires</div>
+            <div class="comp-desc">
+              Platforma prototipe dhe kabllo lidhëse për montimin pa saldim të
+              elementeve.
+            </div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-icon">🫁</span>
+            <div class="comp-name">Tuba & Filtra</div>
+            <div class="comp-desc">
+              Tubi udhëzon rrjedhën e ajrit. Filtrat shtresorë e pastrojnë.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SPECS -->
+    <section class="section-pad">
+      <div class="container">
+        <div class="section-tag">// Specifikimet Teknike</div>
+        <h2 class="section-title">Parametrat e Sistemit</h2>
+
+        <table class="specs-table">
+          <thead>
+            <tr>
+              <th>Parametri</th>
+              <th>Vlera</th>
+              <th>Shënim</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="key">Voltazhi i sistemit</td>
+              <td class="val">5V / 12V</td>
+              <td class="note">Arduino 5V · Turbina 12V</td>
+            </tr>
+            <tr>
+              <td class="key">Pragu i CO₂</td>
+              <td class="val">I programueshëm</td>
+              <td class="note">Vendoset në kod nga zhvilluesi</td>
+            </tr>
+            <tr>
+              <td class="key">Diapazoni DHT22 (Temp.)</td>
+              <td class="val">−40°C → +80°C</td>
+              <td class="note">Saktësi ±0.5°C</td>
+            </tr>
+            <tr>
+              <td class="key">Diapazoni DHT22 (Lagësh.)</td>
+              <td class="val">0% → 100% RH</td>
+              <td class="note">Saktësi ±2–5%</td>
+            </tr>
+            <tr>
+              <td class="key">Sensori MQ135</td>
+              <td class="val">10–10.000 ppm (CO₂)</td>
+              <td class="note">Kalibrohet pas nxehjes h</td>
+            </tr>
+            <tr>
+              <td class="key">Ndërfaqja LCD</td>
+              <td class="val">16×2 HD44780</td>
+              <td class="note">Lidhje paralele 4-bit ose I2C</td>
+            </tr>
+            <tr>
+              <td class="key">Platforma programuese</td>
+              <td class="val">Arduino IDE</td>
+              <td class="note">Gjuha C/C++ e thjeshtësuar</td>
+            </tr>
+            <tr>
+              <td class="key">Kontrolli i turbinës</td>
+              <td class="val">Relay 5V/10A</td>
+              <td class="note">Izolim optik — i sigurt</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- PHOTOS -->
+    <section class="section-pad" id="foto">
+      <div class="container">
+        <div class="section-tag">// Galeria e Projektit</div>
+        <h2 class="section-title">Fotot e Projektit</h2>
+        <p class="section-desc">
+          Imazhe nga montimi, sensorët dhe sistemi final i projektit.
+        </p>
+
+        <div class="photo-grid">
+          <!-- Slot 1 -->
+          <div class="photo-slot" id="slot1">
+            <img
+              src="AG3.jpeg"
+              alt="Montimi i Komponenteve"
+              style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div class="photo-caption">Montimi i Komponenteve</div>
+          </div>
+
+          <!-- Slot 2 -->
+          <div class="photo-slot" id="slot2">
+            <img
+              src="AG2.jpeg"
+              alt="Sensori MQ135 & DHT22"
+              style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div class="photo-caption">Sensori MQ135 & DHT22</div>
+          </div>
+
+          <!-- Slot 3 -->
+          <div class="photo-slot" id="slot3">
+            <img
+              src="AG1.jpeg"
+              alt="Sistemi Final"
+              style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+              "
+            />
+            <div class="photo-caption">Sistemi Final</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!--Prezantimi-->
+    <!--Ppt-->
+    <div style="text-align: center">
+      <a
+        href="https://docs.google.com/presentation/d/e/2PACX-1vQxjP0fbFA7QBOir_aLlvIw1GuDlqgz20ytX8oNe8FI3NIKWsZ2bn95OqAWaeKmuw/pub?start=false&loop=false&delayms=10000"
+        target="_blank"
+        style="
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 14px 32px;
+          background: linear-gradient(135deg, #00e5a0, #00c8e8);
+          color: #0a0f1e;
+          font-weight: 700;
+          font-size: 0.95rem;
+          text-decoration: none;
+          border-radius: 8px;
+          letter-spacing: 0.5px;
+          transition: opacity 0.3s;
+        "
+        onmouseover="this.style.opacity = '0.85'"
+        onmouseout="this.style.opacity = '1'"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+          <polyline points="15 3 21 3 21 9" />
+          <line x1="10" y1="14" x2="21" y2="3" />
+        </svg>
+        Prezantim në PowerPoint
+      </a>
+    </div>
+    <div style="text-align: center; margin-bottom: 50px">
+      <!-- Butoni i parë -->
+    </div>
+
+    <div style="text-align: center">
+      <!-- Butoni i dytë -->
+    </div>
+
+    <!--Dokumenti-->
+    <div style="text-align: center">
+      <a
+        href="https://docs.google.com/document/d/e/2PACX-1vSRKTJ_sgqDagfBRmIxGFF6N73f_kH9EehUvupvGxcXifOYcnnHpV5Ia1qupES7Hg/pub"
+        target="_blank"
+        style="
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 14px 32px;
+          background: linear-gradient(135deg, #00e5a0, #00c8e8);
+          color: #0a0f1e;
+          font-weight: 700;
+          font-size: 0.95rem;
+          text-decoration: none;
+          border-radius: 8px;
+          letter-spacing: 0.5px;
+          transition: opacity 0.3s;
+        "
+        onmouseover="this.style.opacity = '0.85'"
+        onmouseout="this.style.opacity = '1'"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+          <polyline points="15 3 21 3 21 9" />
+          <line x1="10" y1="14" x2="21" y2="3" />
+        </svg>
+        Dokumenti i projektit
+      </a>
+    </div>
+    <!-- TEAM -->
+    <section class="section-pad" id="ekipi">
+      <div class="container">
+        <div class="section-tag">// Ekipi & Institucioni</div>
+        <h2 class="section-title">Rreth Nesh</h2>
+
+        <div class="team-note">
+          <div class="team-icon">🎓</div>
+          <div class="team-text">
+            <h3>Gjimnazi "Ali Demi"</h3>
+            <p>
+              Projekti u realizua si pjesë e lëndës së
+              <strong style="color: var(--green)">Kimisë</strong>. Anëtarët e
+              ekipit projektuan, ndërtuan dhe programuan të gjithë sistemin duke
+              filluar nga zero — nga lidhja e sensorëve deri te kontrolli
+              automatik. <br /><br />
+              <span style="color: var(--cyan)">👤 Mësuesi koordinator:</span
+              >Prs. Klodiana Xhelili<br />
+              <span style="color: var(--cyan)">👤 Anëtarët e ekipit:</span> Enio
+              Hitaj, Sara Brakaj, Anjeza Gjokaj, Brandon Cobo, Kejsi Levendi<br />
+              <span style="color: var(--cyan)">🏫 Shkolla:</span> Gjimnazi "Ali
+              Demi"<br />
+              <span style="color: var(--cyan)">📅 Viti akademik:</span>
+              2025-2026
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <p>
+          <span>AirGuard 2.0</span> — Sistem Monitorimi &amp; Pastrimi për
+          Ajrin<br />
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      function loadPhoto(input, slotId, caption) {
+        const file = input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const slot = document.getElementById(slotId);
+          const img = document.getElementById("img-" + slotId);
+          img.src = e.target.result;
+          slot.classList.add("has-img");
+        };
+        reader.readAsDataURL(file);
+      }
+
+      // Animate flow steps on scroll
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+              e.target.style.animationDelay = i * 0.1 + "s";
+              e.target.style.animation = "fadeUp 0.6s ease both";
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+
+      document
+        .querySelectorAll(".flow-step, .comp-card")
+        .forEach((el) => observer.observe(el));
+      // ================= THEME SYSTEM =================
+
+      // Load saved theme
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = localStorage.getItem("theme");
+
+        if (savedTheme === "light") {
+          document.body.classList.add("light");
+          document.querySelector(".theme-toggle").textContent = "☀️";
+        }
+      });
+
+      // Toggle theme
+      function toggleTheme() {
+        document.body.classList.toggle("light");
+
+        const isLight = document.body.classList.contains("light");
+
+        localStorage.setItem("theme", isLight ? "light" : "dark");
+
+        document.querySelector(".theme-toggle").textContent = isLight
+          ? "☀️"
+          : "🌙";
+      }
+    </script>
+  </body>
+</html>
